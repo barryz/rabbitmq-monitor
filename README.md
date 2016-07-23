@@ -72,4 +72,5 @@ $python main.py &>/dev/null &
 ````
 
 ## TODO
-    - 数据push到graphite
+
+- 数据push到graphite

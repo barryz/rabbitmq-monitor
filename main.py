@@ -34,7 +34,7 @@ def push_falcon():
         ovdata = {}
         ovdata["time"] = ts
         ovdata["step"] = step
-        ovdata["endpoint"] = HOSTNAME
+        ovdata["endpoint"] = hostname
         ovdata["counterType"] = counterType
         ovdata["metric"] = "rabbitmq.overview.%s" % (m)
         ovdata["value"] = overview_info.__getattribute__(m)
@@ -48,7 +48,7 @@ def push_falcon():
                 continue
             qdata["time"] = ts
             qdata["step"] = step
-            qdata["endpoint"] = HOSTNAME
+            qdata["endpoint"] = hostname
             qdata["counterType"] = counterType
             qdata["metric"] = "rabbitmq.queue.%s" % (m)
             qdata["value"] = q.__getattribute__(m)

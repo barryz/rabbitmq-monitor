@@ -33,11 +33,11 @@ class Falcon(object):
         if not isinstance(data, list):
             raise FalconError("params must be a list object")
         
+        r = ""
         try:
             r = requests.post(self.url, data=json.dumps(data))
         except Exception as e:
             raise FalconError("call agent api failed " + str(e))
-            r = ""
         
         if (r and r.status_code == 200):
             return True
