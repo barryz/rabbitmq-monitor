@@ -4,7 +4,8 @@ RabbitMQ 状态数据采集脚本(用于OpenFalcon&Graphite监控系统)
 ## Requirement:
 - os: Linux
 - Python: >= 2.6
-- Python Moudule: requests
+- Python依赖库: requests
+
 -----------------------------------------------------------
 
 ## 原理
@@ -13,7 +14,7 @@ RabbitMQ 状态数据采集脚本(用于OpenFalcon&Graphite监控系统)
 
 ## 相关指标
 ------------------------------------------------
-1. **overview指标**
+- **overview指标**
 
 | key | tag | type | note |
 |-----|-----|------|------|
@@ -40,7 +41,7 @@ RabbitMQ 状态数据采集脚本(用于OpenFalcon&Graphite监控系统)
 |rabbitmq.overview.statsDbEvent| |GAUGE|状态统计数据库事件队列个数|
 
 
-2. **Queue指标**
+- **Queue指标**
 
 | key | tag | type | note |
 |-----|-----|------|------|
@@ -62,9 +63,13 @@ RabbitMQ 状态数据采集脚本(用于OpenFalcon&Graphite监控系统)
 --------------------------------------
 1. 修改config/config.py 里的USERNAME/PASSWORD/PORT ，修改为rabbitmq-server的管理用户和密码、管理端口
 2. 确认是否该用户是否有对应vhost/queue权限
-3.  ````bash
-    $python main.py &>/dev/null &
-    ````
+
+
+## 启动方式
+--------------------------------------
+````bash
+$python main.py &>/dev/null &
+````
 
 ## TODO
-    - 数据PUSH到graphite
+    - 数据push到graphite
