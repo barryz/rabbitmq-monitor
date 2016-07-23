@@ -17,7 +17,7 @@ password = PASSWORD
 port = PORT
 falcon_api = FALCON_API
 counterType = "GAUGE"
-logger = set_log("debug", "/tmp/rmqmon.log")
+logger = set_log("error", "/tmp/rmqmon.log")
 
 
 def fetch_mq_info():
