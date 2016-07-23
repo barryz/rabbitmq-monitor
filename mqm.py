@@ -55,6 +55,8 @@ def push_falcon():
             qdata["tags"] = "name=%s,vhost=%s" % (q.name, q.vhost)
             payload.append(qdata)
 
+    logger.info("get %s metrics" % (len(payload)))
+
     f = Falcon(falcon_api)
     try:
         f.push(payload)
