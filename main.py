@@ -69,7 +69,7 @@ def main():
             push_falcon()
             time.sleep(step)
     except (Exception, KeyboardInterrupt, SystemExit) as e:
-        logger.error("program exit...")
+        logger.error("error occured in main program " + str(e))
         
 
 if __name__ == "__main__":
