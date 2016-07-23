@@ -67,8 +67,13 @@ def push_falcon():
 def main():
     try:
         while 1:
-            fetch_mq_info()
-            push_falcon()
+            try:
+                fetch_mq_info()
+                push_falcon()
+            except Exception as e:
+                logger.error("error occured when handle data " + str(e))
+                time.sleep(step)
+                continue
             time.sleep(step)
     except (Exception, KeyboardInterrupt, SystemExit) as e:
         logger.error("error occured in main program " + str(e))
