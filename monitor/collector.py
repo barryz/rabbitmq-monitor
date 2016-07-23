@@ -59,8 +59,8 @@ class RabbitmqInfo(object):
                                     "vhost"
                                     ])
 
-    def __init__(self, user="guest", password="guest", hostname=socket.gethostname()):
-        self.q = RabbitMQAPI(user, password, hostname)
+    def __init__(self, user="guest", password="guest", hostname=socket.gethostname(), port=15672):
+        self.q = RabbitMQAPI(user, password, hostname, port)
         self.hostname = hostname
 
     @staticmethod

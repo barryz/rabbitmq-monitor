@@ -6,7 +6,7 @@ import time
 from monitor.api import set_log
 from monitor.collector import RabbitmqInfo
 from monitor.falcon import Falcon, FalconError
-from config.config import HOSTNAME, USERNAME, PASSWORD, STEP, FALCON_API
+from config.config import HOSTNAME, USERNAME, PASSWORD, STEP, FALCON_API, PORT
 
 
 
@@ -14,6 +14,7 @@ step = STEP
 hostname = HOSTNAME
 username = USERNAME
 password = PASSWORD
+port = PORT
 falcon_api = FALCON_API
 counterType = "GAUGE"
 logger = set_log("debug", "/tmp/rmqmon.log")
@@ -21,7 +22,7 @@ logger = set_log("debug", "/tmp/rmqmon.log")
 
 def fetch_mq_info():
     global overview_info, q_info
-    mq = RabbitmqInfo(username, password, hostname)
+    mq = RabbitmqInfo(username, password, hostname, port)
     overview_info = mq.overview
     q_info = mq.queues
 

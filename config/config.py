@@ -4,6 +4,7 @@
 
 USERNAME="admin"
 PASSWORD="admin"
+PORT=15672
 STEP=10
 
 try:
