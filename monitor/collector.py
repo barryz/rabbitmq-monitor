@@ -35,6 +35,7 @@ class RabbitmqInfo(object):
                                         "statsDbEvent",
                                         "deliverRate",
                                         "publishRate",
+                                        "redeliverRate",
                                         "ackRate",
                                         "fdUsedPct",
                                         "memUsedPct",
@@ -50,6 +51,7 @@ class RabbitmqInfo(object):
                                     "messages_unacked",
                                     "delver_get",
                                     "publish",
+                                    "redeliver",
                                     "ack",
                                     "dpratio",
                                     "memory",
@@ -98,6 +100,7 @@ class RabbitmqInfo(object):
                                             overview.get("statistics_db_event_queue", 0),
                                             overview.get("message_stats", {}).get("deliver_get_details", {}).get("rate", 0.0),
                                             overview.get("message_stats", {}).get("publish_details", {}).get("rate", 0.0),
+                                            overview.get("message_stats", {}).get("redeliver_details", {}).get("rate", 0.0),
                                             overview.get("message_stats", {}).get("ack_details", {}).get("rate", 0.0),
                                             round(float(nodes.get("fd_used", 0)) / float(nodes.get("fd_total", 655360)), 4),
                                             round(float(nodes.get("mem_used", 0)) / float(nodes.get("mem_limit", 102400000)), 4),
@@ -124,6 +127,7 @@ class RabbitmqInfo(object):
         for q in queues:
             deliver_rate = q.get("message_stats", {}).get("deliver_get_details", {}).get("rate", 0.0)
             publish_rate = q.get("message_stats", {}).get("publish_details", {}).get("rate", 0.0)
+            redeliver_rate = q.get("message_stats", {}).get("redeliver_details", {}).get("rate", 0.0)
             ack_rate = q.get("message_stats", {}).get("ack_details", {}).get("rate", 0.0)
 
             try:
@@ -144,6 +148,7 @@ class RabbitmqInfo(object):
                                                 q.get("messages_unacknowledged", 0),
                                                 deliver_rate,
                                                 publish_rate, 
+                                                redeliver_rate,
                                                 ack_rate,
                                                 dpratio,
                                                 q.get("memory", 0.0),

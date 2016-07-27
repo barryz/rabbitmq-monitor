@@ -20,6 +20,7 @@ RabbitMQ 状态数据采集脚本(用于OpenFalcon&Graphite监控系统)
 |-----|-----|------|------|
 |rabbitmq.overview.publishRate| |GAUGE|生产总速率|
 |rabbitmq.overview.deliverRate| |GAUGE|消费总速率|
+|rabbitmq.overview.redeliverRate| |GAUGE|重新投递总速率|
 |rabbitmq.overview.ackRate| |GAUGE|消费者确认总速率|
 |rabbitmq.overview.msgsTotal| |GAUGE|消息总数, 等于ready + unack|
 |rabbitmq.overview.msgsReadyTotal| |GAUGE|消息堆积总数|
@@ -47,6 +48,7 @@ RabbitMQ 状态数据采集脚本(用于OpenFalcon&Graphite监控系统)
 |-----|-----|------|------|
 |rabbitmq.queue.publish|name=$queue-name,vhost=$vhost|GAUGE|该队列生产消息速率|
 |rabbitmq.queue.delver_get|name=$queue-name,vhost=$vhost|GAUGE|该队列投递消息速率|
+|rabbitmq.queue.redeliver|name=$queue-name,vhost=$vhost|GAUGE|该队列重新投递消息速率|
 |rabbitmq.queue.ack|name=$queue-name,vhost=$vhost|GAUGE|该队列consumer确认消息速率|
 |rabbitmq.queue.consumers|name=$queue-name,vhost=$vhost|GAUGE|该队列consumer个数|
 |rabbitmq.queue.consumer_utilisation|name=$queue-name,vhost=$vhost|GAUGE|该队列消费利用率(消费能力)|
@@ -68,7 +70,7 @@ RabbitMQ 状态数据采集脚本(用于OpenFalcon&Graphite监控系统)
 ## 启动方式
 --------------------------------------
 ````bash
-$python main.py &>/dev/null &
+$python mpm.py &>/dev/null &
 ````
 
 ## TODO
