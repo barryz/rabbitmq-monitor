@@ -7,17 +7,22 @@ pid_file='mqm.pid'
 
 
 function start() {
-    /usr/bin/python ./${main_prog} &>/dev/null &
-    pid=$(pgrep -f ${main_prog})
-    echo $pid > ./${pid_file}
+    curr_pid=$(pgrep -f ${main_prog})
+    if test -z ${curr_pid}; then
+        /usr/bin/python ./${main_prog} &>/dev/null &
+        pid=$(pgrep -f ${main_prog})
+        echo $pid > ./${pid_file}
+    fi
 }
 
 
 function stop() {
     curr_pid=$(pgrep -f ${main_prog})
-    skill -9 ${curr_pid}
-    if test $? -ne 0; then
-        cat ${pid_file} | xargs -i skill -9 {}
+    if [[ -n ${curr_pid} ]]; then
+        skill -9 ${curr_pid}
+        if test $? -ne 0; then
+            cat ${pid_file} | xargs -i skill -9 {}
+        fi
     fi
 }
 
