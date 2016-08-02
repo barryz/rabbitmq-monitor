@@ -102,10 +102,10 @@ class RabbitmqInfo(object):
                                             overview.get("message_stats", {}).get("publish_details", {}).get("rate", 0.0),
                                             overview.get("message_stats", {}).get("redeliver_details", {}).get("rate", 0.0),
                                             overview.get("message_stats", {}).get("ack_details", {}).get("rate", 0.0),
-                                            round(float(nodes.get("fd_used", 0)) / float(nodes.get("fd_total", 655360)), 4),
-                                            round(float(nodes.get("mem_used", 0)) / float(nodes.get("mem_limit", 102400000)), 4),
-                                            round(float(nodes.get("sockets_used", 0)) / float(nodes.get("sockets_total", 589732)), 4),
-                                            round(float(nodes.get("proc_used", 0)) / float(nodes.get("proc_total", 1048576)), 4),
+                                            round(float(nodes.get("fd_used", 0)) / float(nodes.get("fd_total", 655360)), 4) * 100.00,
+                                            round(float(nodes.get("mem_used", 0)) / float(nodes.get("mem_limit", 102400000)), 4) * 100.00,
+                                            round(float(nodes.get("sockets_used", 0)) / float(nodes.get("sockets_total", 589732)), 4) * 100.00,
+                                            round(float(nodes.get("proc_used", 0)) / float(nodes.get("proc_total", 1048576)), 4) * 100.00,
                                             1 if not nodes.get("partitions", True) else 0,  
                                             1 if alive.get("status", True) else 0 
                                             )
@@ -150,10 +150,10 @@ class RabbitmqInfo(object):
                                                 publish_rate, 
                                                 redeliver_rate,
                                                 ack_rate,
-                                                dpratio,
+                                                dpratio * 100.00,
                                                 q.get("memory", 0.0),
                                                 q.get("consumers", 0),
-                                                q.get("consumer_utilisation", None) or 0.0,
+                                                q.get("consumer_utilisation") * 100.00 or 0.0,
                                                 status,
                                                 q.get("vhost", "null")
                                                 ))
