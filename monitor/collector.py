@@ -49,7 +49,7 @@ class RabbitmqInfo(object):
                                     "messages",
                                     "messages_ready",
                                     "messages_unacked",
-                                    "delver_get",
+                                    "deliver_get",
                                     "publish",
                                     "redeliver",
                                     "ack",
@@ -153,7 +153,7 @@ class RabbitmqInfo(object):
                                                 dpratio * 100.00,
                                                 q.get("memory", 0.0),
                                                 q.get("consumers", 0),
-                                                q.get("consumer_utilisation") * 100.00 or 0.0,
+                                                q.get("consumer_utilisation", None) and q.get("consumer_utilisation") * 100.00 or 0.0,
                                                 status,
                                                 q.get("vhost", "null")
                                                 ))
