@@ -9,7 +9,6 @@ from monitor.falcon import Falcon, FalconError
 from config.config import HOSTNAME, USERNAME, PASSWORD, STEP, FALCON_API, PORT
 
 
-
 step = STEP
 hostname = HOSTNAME
 username = USERNAME
@@ -87,7 +86,7 @@ def main():
             time.sleep(step)
     except (Exception, KeyboardInterrupt, SystemExit) as e:
         logger.error("error occured in main program " + str(e))
-        
+
 
 if __name__ == "__main__":
     main()
