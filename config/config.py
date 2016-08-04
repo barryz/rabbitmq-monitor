@@ -3,7 +3,7 @@
 
 
 USERNAME="admin"
-PASSWORD="On1NgXOoy3lLMO"
+PASSWORD="admin"
 PORT=15672
 STEP=10
 
