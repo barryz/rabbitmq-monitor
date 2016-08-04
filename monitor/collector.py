@@ -22,7 +22,7 @@ class RabbitmqInfo(object):
     """
     metric_overview = namedtuple("overview", [
                                         "queuesTotal",
-                                        "channlesTotal",
+                                        "channelsTotal",
                                         "connectionsTotal",
                                         "consumersTotal",
                                         "exchangesTotal",

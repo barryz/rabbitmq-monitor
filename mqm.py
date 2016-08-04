@@ -15,6 +15,7 @@ hostname = HOSTNAME
 username = USERNAME
 password = PASSWORD
 port = PORT
+len_limit = 30
 falcon_api = FALCON_API
 counterType = "GAUGE"
 logger = set_log("error", "/tmp/rmqmon.log")
@@ -56,13 +57,22 @@ def push_falcon():
             payload.append(qdata)
 
     logger.info("get %s metrics" % (len(payload)))
-
+    lens = len(payload)
     f = Falcon(falcon_api)
-    try:
-        f.push(payload)
-    except FalconError as e:
-        logger.error("push data to tranfer failed" + str(e))
 
+    # 单次push限制30条metrics
+    if lens > len_limit:
+        offset = lens % len_limit
+        for i in range(0, lens-1, len_limit):
+            if i+len_limit-1 >= lens:
+                to_send = payload[i:offset+i-1]
+            else:
+                to_send = payload[i:len_limit+i-1] 
+            try:
+                f.push(to_send)
+            except FalconError as e:
+                logger.error("push data to tranfer failed" + str(e))
+     
 
 def main():
     try:
