@@ -71,7 +71,12 @@ def push_falcon():
                 f.push(to_send)
             except FalconError as e:
                 logger.error("push data to tranfer failed" + str(e))
-     
+    else:
+        try:
+            f.push(payload)
+        except FalconError as e:
+            logger.error("push data to tranfer failed" + str(e))
+
 
 def main():
     try:
