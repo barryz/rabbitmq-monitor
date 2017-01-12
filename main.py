@@ -3,10 +3,12 @@
 
 
 import time
+from monitor.statsd_client import StatsdClient
 from monitor.api import set_log
 from monitor.collector import RabbitmqInfo
 from monitor.falcon import Falcon, FalconError
-from config.config import HOSTNAME, USERNAME, PASSWORD, STEP, FALCON_API, PORT
+from config.config import HOSTNAME, USERNAME, PASSWORD, STEP, FALCON_API, PORT, STATSD_FILE
+from utils.common import load_yaml_data
 
 
 step = STEP
@@ -78,12 +80,53 @@ def push_falcon():
             logger.error("push data to tranfer failed" + str(e))
 
 
+class StatsDHandlers(object):
+    def __init__(self, filename=None, prefix=None):
+        self.filename = filename
+        self.prefix = prefix
+
+    def load_statsd_conf(self):
+        data = load_yaml_data(self.filename)
+        statsd_host = data.get('host', '')
+        statsd_port = data.get('port', 8125)
+        return statsd_host, statsd_port
+
+    def _send_to_statsd(self):
+        try:
+            if self.qdata:
+                for k, v in self.qdata.items():
+                    k = HOSTNAME + '.'
+                    self.statsd_client.gauge(k, v)
+            logger.info("Successfully send %d metrics to StatsD!", len(self.qdata))
+        except Exception as e:
+            logger.error(e)
+
+    def _parse(self):
+        self.qdata = {}
+        for q in q_info:
+            for m in q._fields:
+                self.qdata["rabbitmq-overview." + m] = q.__getattribute__(m)
+
+        for m in overview_info._fields:
+            self.qdata["rabbitmq-queue." + m] = overview_info.__getattribute__(m)
+
+        return self._send_to_statsd()
+
+    def __call__(self, *args, **kwargs):
+        if self.filename:
+            statsd_host, statsd_port = self.load_statsd_conf()
+            self.statsd_client = StatsdClient(statsd_host, statsd_port, self.prefix)()
+            return self._parse()
+
+
 def main():
     try:
+        push_statsd = StatsDHandlers(STATSD_FILE)
         while 1:
             try:
                 fetch_mq_info()
                 push_falcon()
+                push_statsd()
             except Exception as e:
                 logger.error("error occured when handle data " + str(e))
                 time.sleep(step)
