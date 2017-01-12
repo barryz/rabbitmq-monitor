@@ -95,6 +95,7 @@ class StatsDHandlers(object):
         try:
             if self.qdata:
                 for k, v in self.qdata.items():
+                    k = HOSTNAME + '.'
                     self.statsd_client.gauge(k, v)
             logger.info("Successfully send %d metrics to StatsD!", len(self.qdata))
         except Exception as e:
