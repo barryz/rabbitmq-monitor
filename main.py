@@ -104,11 +104,11 @@ class StatsDHandlers(object):
     def _parse(self):
         self.qdata = {}
         for q in q_info:
-            for filed in q._fields:
-                self.qdata[filed] = q.__getattribute__(m)
+            for m in q._fields:
+                self.qdata["rabbitmq-overview." + m] = q.__getattribute__(m)
 
         for m in overview_info._fields:
-            self.qdata[m] = q.__getattribute__(m)
+            self.qdata["rabbitmq-queue." + m] = overview_info.__getattribute__(m)
 
         return self._send_to_statsd()
 
